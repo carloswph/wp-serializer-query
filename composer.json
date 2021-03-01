@@ -1,0 +1,25 @@
+{
+    "name": "carloswph/wp-serializer-query",
+    "description": "Uses Symfony Serializer to generate JSON, CSV or XML output from WP_Query.",
+    "type": "library",
+    "keywords": ["symfony","wp","wp symfony", "wordpress", "csv", "json", "xml", "WP_Query"],
+    "require": {
+    	"symfony/serializer": "^5.2",
+        "symfony/property-access": "^5.2",
+        "symfony/yaml": "^5.2"
+    },
+    "autoload": {
+    	"psr-4": {
+    		"WPH\\": "src/"
+    	}
+    },
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Carlos Matos | WP Helpers",
+            "email": "carlos@wp-helpers.com",
+            "homepage": "https://wp-helpers.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
