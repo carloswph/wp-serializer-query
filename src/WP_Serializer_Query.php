@@ -8,6 +8,7 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\YamlEncoder;
 
 class WP_Serializer_Query extends \WP_Query {
 
@@ -31,7 +32,9 @@ class WP_Serializer_Query extends \WP_Query {
 
 			$ry = json_decode(json_encode($rt));
 
-			return $encoder->encode($ry, 'xml');
+			$output = $encoder->encode($ry, 'xml');
+
+			return htmlspecialchars($output);
 
 		} elseif($this->query['response_format'] == 'json') {
 
@@ -44,7 +47,9 @@ class WP_Serializer_Query extends \WP_Query {
 
 			$ry = json_decode(json_encode($rt));
 
-			return $serializer->serialize($ry, 'json');
+			$output = $serializer->serialize($ry, 'json');
+
+			return $output;
 
 		} elseif($this->query['response_format'] == 'csv') {
 
@@ -57,8 +62,24 @@ class WP_Serializer_Query extends \WP_Query {
 
 			$ry = json_decode(json_encode($rt));
 
-			return $serializer->serialize($ry, 'csv');
+			$output = $serializer->serialize($ry, 'csv');
 
+			return htmlspecialchars($output);
+
+		} elseif($this->query['response_format'] == 'yaml') {
+
+			$normalizer = new ObjectNormalizer();
+			$encoder = new YamlEncoder();
+
+			$serializer = new Serializer([$normalizer], [$encoder]);
+
+			$rt = $this->posts;
+
+			$ry = json_decode(json_encode($rt));
+
+			$output = $serializer->serialize($ry, 'yaml');
+
+			return htmlspecialchars($output);
 		}
 
 	}
